@@ -158,42 +158,39 @@ namespace vitamin
         /// </summary>
         static public void reflex(Type type)
         {
-            Logger.log("//=============反射"+type.ToString()+"=============");
+            Logger.to("[REFLEX]",ConsoleColor.Magenta,"-----------["+type.ToString()+"]------------");
             Vitamin.logFileds(type);
             Vitamin.logPropertys(type);
             Vitamin.logMethods(type);
-            Logger.log("===========================================//");
+            Logger.to("[REFLEX]",ConsoleColor.Magenta,"------------------------------------------");
         }
 
         static private void logFileds(Type classType)
         {
             FieldInfo[] filedInfos = classType.GetFields();
-            Logger.log("/---------"+"字段:" + filedInfos.Length + "---------");
+            Logger.to("[REFLEX]",ConsoleColor.Magenta,"    "+"字段[" + filedInfos.Length + "]:");
             foreach (FieldInfo info in filedInfos)
             {
-                Logger.log(info.Name);
+                Logger.to("[REFLEX]",ConsoleColor.DarkMagenta,"            - "+info.Name);
             }
-            Logger.log("--------------------------/");
         }
         static private void logMethods(Type classType)
         {
             MethodInfo[] methods = classType.GetMethods();
-            Logger.log("/---------"+"方法:" + methods.Length + "---------");
+            Logger.to("[REFLEX]",ConsoleColor.Magenta,"    "+"方法[" + methods.Length + "]:");
             foreach (MethodInfo info in methods)
             {
-                Logger.log(info.Name);
+                Logger.to("[REFLEX]",ConsoleColor.DarkMagenta,"            - "+info.Name);
             }
-            Logger.log("--------------------------/");
         }
         static private void logPropertys(Type classType)
         {
             PropertyInfo[] properties = classType.GetProperties();
-            Logger.log("/---------"+"属性:" + properties.Length + "---------");
+            Logger.to("[REFLEX]",ConsoleColor.Magenta,"    "+"属性[" + properties.Length + "]:");
             foreach (PropertyInfo info in properties)
             {
-                Logger.log(info.Name);
+                Logger.to("[REFLEX]",ConsoleColor.DarkMagenta,"            - "+info.Name);
             }
-            Logger.log("--------------------------/");
         }
 
         static public void delay(int time, Action<object, System.Timers.ElapsedEventArgs> method)
