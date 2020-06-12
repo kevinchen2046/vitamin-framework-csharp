@@ -10,8 +10,8 @@ namespace vitamin
 
         }
 
-        public void initialize() { }
-        public void reset() { }
+        public virtual void initialize() { }
+        public virtual void reset() { }
     }
 
     class ViewBase : EventEmitter

@@ -2,40 +2,21 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace vitamin
-{
-    public class DoesNotExistException : Exception
-    {
-        public DoesNotExistException() : base() { }
-        public DoesNotExistException(string message) : base(message) { }
-        public DoesNotExistException(string message, System.Exception inner) : base(message, inner) { }
-    }
+namespace vitamin{
+
+    public delegate void EventHandler(params object[] args);
 
     public class EventEmitter
     {
-        /*
-        {
-            "subscribe_event",
-            [
-                HandleSubscribe<List<object>>,
-                DoDbWork<List<object>>,
-                SendInfo<List<object>>
-            ],
-             "listen_event",
-            [
-                HandleListen<List<object>>
-            ]
-        }
-        */
 
-        private Dictionary<string, List<Action<object>>> _events;
+        private Dictionary<string, List<EventHandler>> _events;
 
         /// <summary>
         /// The EventEmitter object to subscribe to events with
         /// </summary>
         public EventEmitter()
         {
-            this._events = new Dictionary<string, List<Action<object>>>();
+            this._events = new Dictionary<string, List<EventHandler>>();
         }
 
         /// <summary>
@@ -43,16 +24,16 @@ namespace vitamin
         /// </summary>
         /// <param name="eventName">Event name to subscribe to</param>
         /// <param name="method">Method to add to the event</param>
-        public void On(string eventName, Action<object> method)
+        public void on(string eventName, EventHandler method)
         {
-            List<Action<object>> subscribedMethods;
+            List<EventHandler> subscribedMethods;
             if (this._events.TryGetValue(eventName, out subscribedMethods))
             {
                 subscribedMethods.Add(method);
             }
             else
             {
-                this._events.Add(eventName, new List<Action<object>> { method });
+                this._events.Add(eventName, new List<EventHandler> { method });
             }
         }
 
@@ -62,12 +43,12 @@ namespace vitamin
         /// </summary>
         /// <param name="eventName">Event name to be emitted</param>
         /// <param name="data">Data to call the attached methods with</param>
-        public void Emit(string eventName, object data)
+        public void emit(string eventName, params object[] data)
         {
-            List<Action<object>> subscribedMethods;
+            List<EventHandler> subscribedMethods;
             if (!this._events.TryGetValue(eventName, out subscribedMethods))
             {
-                throw new DoesNotExistException(string.Format("Event [{0}] does not exist in the emitter. Consider calling EventEmitter.On", eventName));
+                Logger.warn(string.Format("Event [{0}] does not exist in the emitter. Consider calling EventEmitter.On", eventName));
             }
             else
             {
@@ -83,19 +64,19 @@ namespace vitamin
         /// </summary>
         /// <param name="eventName">Event name to remove function from</param>
         /// <param name="method">Method to remove from eventName</param>
-        public void RemoveListener(string eventName, Action<object> method)
+        public void removeListener(string eventName, EventHandler method)
         {
-            List<Action<object>> subscribedMethods;
+            List<EventHandler> subscribedMethods;
             if (!this._events.TryGetValue(eventName, out subscribedMethods))
             {
-                throw new DoesNotExistException(string.Format("Event [{0}] does not exist to have listeners removed.", eventName));
+               Logger.warn(string.Format("Event [{0}] does not exist to have listeners removed.", eventName));
             }
             else
             {
                 var _event = subscribedMethods.Exists(e => e == method);
                 if (_event == false)
                 {
-                    throw new DoesNotExistException(string.Format("Func [{0}] does not exist to be removed.", method.Method));
+                   Logger.warn(string.Format("Func [{0}] does not exist to be removed.", method.Method));
                 }
                 else
                 {
@@ -108,12 +89,12 @@ namespace vitamin
         /// Removes all methods from the event [eventName]
         /// </summary>
         /// <param name="eventName">Event name to remove methods from</param>
-        public void RemoveAllListeners(string eventName)
+        public void removeAllListeners(string eventName)
         {
-            List<Action<object>> subscribedMethods;
+            List<EventHandler> subscribedMethods;
             if (!this._events.TryGetValue(eventName, out subscribedMethods))
             {
-                throw new DoesNotExistException(string.Format("Event [{0}] does not exist to have methods removed.", eventName));
+               Logger.warn(string.Format("Event [{0}] does not exist to have methods removed.", eventName));
             }
             else
             {
@@ -127,12 +108,12 @@ namespace vitamin
         /// </summary>
         /// <param name="eventName">The event name to call methods for</param>
         /// <param name="data">The data to call all the methods with</param>
-        public void EmitAsync(string eventName, object data)
+        public void emitAsync(string eventName, object data)
         {
-            List<Action<object>> subscribedMethods;
+            List<EventHandler> subscribedMethods;
             if (!this._events.TryGetValue(eventName, out subscribedMethods))
             {
-                throw new DoesNotExistException(string.Format("Event [{0}] does not exist in the emitter. Consider calling EventEmitter.On", eventName));
+               Logger.warn(string.Format("Event [{0}] does not exist in the emitter. Consider calling EventEmitter.On", eventName));
             }
             else
             {

@@ -23,7 +23,7 @@ namespace vitamin
 
         static public void debug(params object[] args)
         {
-            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Logger.to("[DEBUG]", args);
         }
 

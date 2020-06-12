@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Sl2PLbgL6h8e2tR4+adbXaS3C3nHyCGmdoJ1/2tpMLMxB0hs4EGXHvA2L0vM9qaI+Oa/fwfqS2ljpzTc0tg9+w==",
+  "dgSpecHash": "ihScsFI2fk582tNod1KDq/wqBUAakQP6aiDtrdiMoEBbsW6PCzNtCPVhDQe6R/OalCuY+0ulPZ1Te958CngqJA==",
   "success": true,
-  "projectFilePath": "F:\\projects\\cshape\\test\\test.csproj",
+  "projectFilePath": "F:\\projects\\cshape\\vitamin-framework-c-\\test.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

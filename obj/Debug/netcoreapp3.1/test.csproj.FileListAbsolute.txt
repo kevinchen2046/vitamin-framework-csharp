@@ -11,3 +11,16 @@ F:\projects\cshape\test\obj\Debug\netcoreapp3.1\test.csproj.CoreCompileInputs.ca
 F:\projects\cshape\test\obj\Debug\netcoreapp3.1\test.dll
 F:\projects\cshape\test\obj\Debug\netcoreapp3.1\test.pdb
 F:\projects\cshape\test\obj\Debug\netcoreapp3.1\test.genruntimeconfig.cache
+F:\projects\cshape\vitamin-framework-c-\bin\Debug\netcoreapp3.1\test.exe
+F:\projects\cshape\vitamin-framework-c-\bin\Debug\netcoreapp3.1\test.deps.json
+F:\projects\cshape\vitamin-framework-c-\bin\Debug\netcoreapp3.1\test.runtimeconfig.json
+F:\projects\cshape\vitamin-framework-c-\bin\Debug\netcoreapp3.1\test.runtimeconfig.dev.json
+F:\projects\cshape\vitamin-framework-c-\bin\Debug\netcoreapp3.1\test.dll
+F:\projects\cshape\vitamin-framework-c-\bin\Debug\netcoreapp3.1\test.pdb
+F:\projects\cshape\vitamin-framework-c-\obj\Debug\netcoreapp3.1\test.csprojAssemblyReference.cache
+F:\projects\cshape\vitamin-framework-c-\obj\Debug\netcoreapp3.1\test.AssemblyInfoInputs.cache
+F:\projects\cshape\vitamin-framework-c-\obj\Debug\netcoreapp3.1\test.AssemblyInfo.cs
+F:\projects\cshape\vitamin-framework-c-\obj\Debug\netcoreapp3.1\test.csproj.CoreCompileInputs.cache
+F:\projects\cshape\vitamin-framework-c-\obj\Debug\netcoreapp3.1\test.dll
+F:\projects\cshape\vitamin-framework-c-\obj\Debug\netcoreapp3.1\test.pdb
+F:\projects\cshape\vitamin-framework-c-\obj\Debug\netcoreapp3.1\test.genruntimeconfig.cache
