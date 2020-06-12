@@ -23,13 +23,12 @@ namespace vitamin
 
         public virtual void enter()
         {
-            Logger.log("ViewBase:enter");
+            
             //Vitamin.addCommandEnd(this);
         }
 
         public virtual void exit()
         {
-            Logger.log("ViewBase:exit");
             //Vitamin.removeCommandEnd(this);
         }
 

@@ -158,39 +158,42 @@ namespace vitamin
         /// </summary>
         static public void reflex(Type type)
         {
-            Logger.log(type.ToString());
+            Logger.log("//=============反射"+type.ToString()+"=============");
             Vitamin.logFileds(type);
             Vitamin.logPropertys(type);
             Vitamin.logMethods(type);
+            Logger.log("===========================================//");
         }
 
         static private void logFileds(Type classType)
         {
-            Logger.log(classType.GetCustomAttributes(typeof(ModelClass), true));
             FieldInfo[] filedInfos = classType.GetFields();
-            Logger.log("所有字段:" + filedInfos.Length + "--------------------");
+            Logger.log("/---------"+"字段:" + filedInfos.Length + "---------");
             foreach (FieldInfo info in filedInfos)
             {
-                Logger.log(info.ToString() + "Model" + Attribute.IsDefined(info, typeof(ModelClass)).ToString());
+                Logger.log(info.Name);
             }
+            Logger.log("--------------------------/");
         }
         static private void logMethods(Type classType)
         {
             MethodInfo[] methods = classType.GetMethods();
-            Logger.log("所有方法:" + methods.Length + "--------------------");
+            Logger.log("/---------"+"方法:" + methods.Length + "---------");
             foreach (MethodInfo info in methods)
             {
-                Logger.log(info.ToString());
+                Logger.log(info.Name);
             }
+            Logger.log("--------------------------/");
         }
         static private void logPropertys(Type classType)
         {
             PropertyInfo[] properties = classType.GetProperties();
-            Logger.log("所有属性:" + properties.Length + "--------------------");
+            Logger.log("/---------"+"属性:" + properties.Length + "---------");
             foreach (PropertyInfo info in properties)
             {
-                Logger.log(info.ToString());
+                Logger.log(info.Name);
             }
+            Logger.log("--------------------------/");
         }
 
         static public void delay(int time, Action<object, System.Timers.ElapsedEventArgs> method)
@@ -208,13 +211,6 @@ namespace vitamin
             t.AutoReset = true;//设置是执行一次（false）还是一直执行(true)；
             t.Enabled = true;//是否执行System.Timers.Timer.Elapsed事件；
         }
-    }
-
-
-    [AttributeUsage(AttributeTargets.Class)]
-    class ModelClass : Attribute
-    {
-        public ModelClass() { }
     }
 
     [AttributeUsage(AttributeTargets.Class)]

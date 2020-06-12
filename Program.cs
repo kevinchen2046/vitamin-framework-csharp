@@ -9,7 +9,7 @@ namespace test
         {
             //初始化 维他命
             Vitamin.initialize();
-            //Vitamin.reflex(typeof(ModelUser));
+            Vitamin.reflex(typeof(ModelUser));
 
             //从框架内获取一个视图组件
             ViewMain view = (ViewMain)Vitamin.getView(typeof(ViewMain));
