@@ -1,11 +1,4 @@
-# vitamin-framework-c-
-维他命游戏框架的C#版本
-
->> 维他命框架是建立在依赖注入思想上的轻型MVC框架，设计初衷是为了提高代码的可读性及提高开发效率。
-
-## 使用示例
-```c#
-using System;
+﻿using System;
 using System.Reflection;
 using vitamin;
 namespace test
@@ -15,6 +8,7 @@ namespace test
         static void Main(string[] args)
         {
             Vitamin.initialize();
+            //Vitamin.reflex(typeof(ModelUser));
 
             ViewMain view = (ViewMain)Vitamin.getView(typeof(ViewMain));
             view.enter();
@@ -64,6 +58,9 @@ namespace test
 
             Logger.info(this.user.age);
             this.execCommand("user.send");
+            // var a = new A();
+            // a.On("bb", this.eventHandler);
+            // a.Emit("bb", "event emit!");
         }
 
         public override  void exit()
@@ -87,4 +84,3 @@ namespace test
     }
 
 }
-```
