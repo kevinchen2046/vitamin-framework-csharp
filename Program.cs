@@ -15,7 +15,7 @@ namespace test
             ViewMain view = (ViewMain)Vitamin.getView(typeof(ViewMain));
 
             //测试事件机制
-            view.on("ENTER",Program.eventHandler);
+            view.on("ENTER", Program.eventHandler);
 
             //视图组件打开
             view.enter();
@@ -27,8 +27,9 @@ namespace test
             });
             Console.ReadKey();
         }
-        
-        static private void eventHandler(params object[] args){
+
+        static private void eventHandler(params object[] args)
+        {
             Logger.debug(args);
         }
     }
@@ -39,13 +40,13 @@ namespace test
     class CommandUser : CommandBase
     {
         //在Command可以注入任意的Model
-         [Model]
+        [Model]
         public ModelUser user;
 
         //Command被执行
         public override void exec(params object[] args)
         {
-            Logger.debug("CommandUser:"+this.user.name);
+            Logger.debug("CommandUser:" + this.user.name);
             this.net.request(new TestMsg(), delegate (object data)
             {
                 Logger.debug(data.ToString());
@@ -59,14 +60,21 @@ namespace test
         //在Model可以注入除自身以外的任意的Model
         [Model]
         public ModelUser user;
+
+        //单例的使用
+        [Instance]
+        public Manager manager;
+
         public ModelBag()
         {
 
         }
 
         //这里是Model的初始化方法，会在框架初始化之前被触发
-        public override void initialize(){
-            Logger.debug("ModelBag:"+this.user.name);
+        public override void initialize()
+        {
+            Logger.debug("ModelBag:" + this.user.name);
+            Logger.debug("ModelBag:" + this.manager.name);
         }
     }
 
@@ -94,7 +102,7 @@ namespace test
             Logger.log("ViewMain:enter");
             base.enter();
 
-            Logger.debug("ViewMain:"+this.user.name);
+            Logger.debug("ViewMain:" + this.user.name);
             this.execCommand("user.send");
             this.emit("ENTER", "event", "emit!");
         }
@@ -115,4 +123,8 @@ namespace test
         public object data { get { return this.__data; } set { this.__data = value; } }
     }
 
+    class Manager
+    {
+        public string name="Manager";
+    }
 }

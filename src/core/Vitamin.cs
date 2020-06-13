@@ -14,11 +14,14 @@ namespace vitamin
         static Dictionary<Type, ViewBase> __views;
         static Dictionary<Type, ModelBase> __modles;
         static Dictionary<string, CommandBase> __cmds;
+        static Dictionary<Type, object> __instances;
+
         static public void initialize()
         {
             Vitamin.__views = new Dictionary<Type, ViewBase>();
             Vitamin.__modles = new Dictionary<Type, ModelBase>();
             Vitamin.__cmds = new Dictionary<string, CommandBase>();
+            Vitamin.__instances = new Dictionary<Type, object>();
 
             var types = Assembly.GetCallingAssembly().GetTypes();
             var modelBaseType = typeof(ModelBase);
@@ -65,34 +68,81 @@ namespace vitamin
                 }
                 if (allInject)
                 {
-                    foreach (var model in Vitamin.__modles){
+                    foreach (var model in Vitamin.__modles)
+                    {
+                        Vitamin.injectInstance(model.Value, model.Value.GetType());
                         model.Value.initialize();
                     }
                     break;
                 }
             }
-            while (true)
+
+            foreach (var cmd in Vitamin.__cmds)
             {
-                var allInject = true;
-                foreach (var cmd in Vitamin.__cmds)
-                {
-                    bool result = Vitamin.injectModel(cmd.Value, cmd.Value.GetType());
-                    if (!result) allInject = false;
-                }
-                if (allInject){
-                    break;
-                }
+                Vitamin.injectInstance(cmd.Value, cmd.Value.GetType());
+                bool result = Vitamin.injectModel(cmd.Value, cmd.Value.GetType());
             }
             Logger.info("🎇✨🎉✨🛠💊 - Vitamin Start - 💊🛠✨🎉✨🎇");
         }
-        static private bool injectModel(object target, Type type)
+
+        /// <summary>
+        /// 注入单例
+        /// 仅供内部调用，如果你希望框架外的类有依赖注入，请使用createObject实例化该类
+        /// </summary>
+        static private bool injectInstance(object target, Type type)
         {
             bool result = true;
-            var modelType=typeof(Model);
+            var instanceType = typeof(Instance);
             FieldInfo[] filedInfos = type.GetFields();
             foreach (FieldInfo info in filedInfos)
             {
-                if (Attribute.IsDefined(info,modelType))
+                if (Attribute.IsDefined(info, instanceType))
+                {
+                    info.SetValue(target, Vitamin.getInstance(info.FieldType));
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 获取单例
+        /// 通过此接口获取的单例会有相关的依赖注入
+        /// </summary>
+        static public object getInstance(Type type)
+        {
+            if (Vitamin.__instances.GetValueOrDefault(type) == null)
+            {
+                object instance = Activator.CreateInstance(type);
+                Vitamin.injectModel(instance, instance.GetType());
+                Vitamin.__instances[type] = instance;
+            }
+            return Vitamin.__instances[type];
+        }
+
+        /// <summary>
+        /// 创建实例
+        /// 此方法适用于框架外的类有依赖注入的需求的情况，请使用该方法实例化该类
+        /// </summary>
+        static public object createObject(Type type)
+        {
+            object obj = Activator.CreateInstance(type);
+            Vitamin.injectModel(obj, type);
+            Vitamin.injectInstance(obj, type);
+            return obj;
+        }
+
+        /// <summary>
+        /// 注入Model
+        /// 通过框架接口获取的组件才会有相关的依赖注入
+        /// </summary>
+        static private bool injectModel(object target, Type type)
+        {
+            bool result = true;
+            var modelType = typeof(Model);
+            FieldInfo[] filedInfos = type.GetFields();
+            foreach (FieldInfo info in filedInfos)
+            {
+                if (Attribute.IsDefined(info, modelType))
                 {
                     if (!Vitamin.__modles.ContainsKey(info.FieldType))
                     {
@@ -158,38 +208,38 @@ namespace vitamin
         /// </summary>
         static public void reflex(Type type)
         {
-            Logger.to("[REFLEX]",ConsoleColor.Magenta,"-----------["+type.ToString()+"]------------");
+            Logger.to("[REFLEX]", ConsoleColor.Magenta, "-----------[" + type.ToString() + "]------------");
             Vitamin.logFileds(type);
             Vitamin.logPropertys(type);
             Vitamin.logMethods(type);
-            Logger.to("[REFLEX]",ConsoleColor.Magenta,"------------------------------------------");
+            Logger.to("[REFLEX]", ConsoleColor.Magenta, "------------------------------------------");
         }
 
         static private void logFileds(Type classType)
         {
             FieldInfo[] filedInfos = classType.GetFields();
-            Logger.to("[REFLEX]",ConsoleColor.Magenta,"    "+"字段[" + filedInfos.Length + "]:");
+            Logger.to("[REFLEX]", ConsoleColor.Magenta, "    " + "字段[" + filedInfos.Length + "]:");
             foreach (FieldInfo info in filedInfos)
             {
-                Logger.to("[REFLEX]",ConsoleColor.DarkMagenta,"            - "+info.Name);
+                Logger.to("[REFLEX]", ConsoleColor.DarkMagenta, "            - " + info.Name);
             }
         }
         static private void logMethods(Type classType)
         {
             MethodInfo[] methods = classType.GetMethods();
-            Logger.to("[REFLEX]",ConsoleColor.Magenta,"    "+"方法[" + methods.Length + "]:");
+            Logger.to("[REFLEX]", ConsoleColor.Magenta, "    " + "方法[" + methods.Length + "]:");
             foreach (MethodInfo info in methods)
             {
-                Logger.to("[REFLEX]",ConsoleColor.DarkMagenta,"            - "+info.Name);
+                Logger.to("[REFLEX]", ConsoleColor.DarkMagenta, "            - " + info.Name);
             }
         }
         static private void logPropertys(Type classType)
         {
             PropertyInfo[] properties = classType.GetProperties();
-            Logger.to("[REFLEX]",ConsoleColor.Magenta,"    "+"属性[" + properties.Length + "]:");
+            Logger.to("[REFLEX]", ConsoleColor.Magenta, "    " + "属性[" + properties.Length + "]:");
             foreach (PropertyInfo info in properties)
             {
-                Logger.to("[REFLEX]",ConsoleColor.DarkMagenta,"            - "+info.Name);
+                Logger.to("[REFLEX]", ConsoleColor.DarkMagenta, "            - " + info.Name);
             }
         }
 
@@ -208,6 +258,16 @@ namespace vitamin
             t.AutoReset = true;//设置是执行一次（false）还是一直执行(true)；
             t.Enabled = true;//是否执行System.Timers.Timer.Elapsed事件；
         }
+    }
+
+    /**
+     * 单例装饰器
+     * @param clazz 需要单例化的class对象
+     */
+    [AttributeUsage(AttributeTargets.Field)]
+    class Instance : Attribute
+    {
+        public Instance() { }
     }
 
     [AttributeUsage(AttributeTargets.Class)]
