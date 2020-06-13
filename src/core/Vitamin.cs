@@ -83,7 +83,7 @@ namespace vitamin
                     break;
                 }
             }
-            Logger.info("Vitamin Start!");
+            Logger.info("🎇✨🎉✨🛠💊 - Vitamin Start - 💊🛠✨🎉✨🎇");
         }
         static private bool injectModel(object target, Type type)
         {
