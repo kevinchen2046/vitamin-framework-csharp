@@ -1,9 +1,35 @@
 # vitamin-framework-c-
 维他命游戏框架的C#版本
 
-> 维他命框架是建立在依赖注入思想上的轻型MVC框架，设计初衷是为了提高代码的可读性及提高开发效率。
+>> 维他命框架是建立在依赖注入思想上的轻型MVC框架，设计初衷是为了提高代码的可读性及提高开发效率。
+
+>> dotnet run
 
 ## 使用示例
+
+### 事件 Event
+```c#
+// Example:
+EventEmitter emitter=new EventEmitter();
+
+class MyEvent : Event
+{
+    public static string ENTER = "ENTER";
+    public string name = "myname is.xxx";
+    public MyEvent(string type, params object[] data) : base(type, data){}
+}
+
+emitter.on<Event>("ENTER", (Event e)=>{
+     Logger.log(e.ToString());
+});
+emitter.on<MyEvent>(MyEvent.ENTER, (MyEvent e)=>{
+     Logger.log(e.ToString());
+});
+
+emitter.emit<Event>("ENTER", "a", "bc", "hello!!");
+emitter.emit<MyEvent>(MyEvent.ENTER, 1, 2, 3);
+```
+
 ```c#
 using System;
 using System.Reflection;

@@ -47,7 +47,7 @@ namespace vitamin
                     CmdRoute des = (CmdRoute)type.GetCustomAttribute(typeof(CmdRoute));
                     if (des == null)
                     {
-                        Logger.error(baseType.ToString() + "没有添加描述信息!");
+                        Logger.Error(baseType.ToString() + "没有添加描述信息!");
                     }
                     else
                     {
@@ -63,6 +63,8 @@ namespace vitamin
                 var allInject = true;
                 foreach (var model in Vitamin.__modles)
                 {
+                    //MethodInfo method = typeof(Vitamin).GetMethod("injectModel");//先获取到DisplayType<T>的MethodInfo反射对象
+                    //method.MakeGenericMethod(new Type[] { model.Value.GetType() }).Invoke(Vitamin, model.Value);//然后使用MethodInfo反射对象调用
                     bool result = Vitamin.injectModel(model.Value, model.Value.GetType());
                     if (!result) allInject = false;
                 }
@@ -82,14 +84,14 @@ namespace vitamin
                 Vitamin.injectInstance(cmd.Value, cmd.Value.GetType());
                 bool result = Vitamin.injectModel(cmd.Value, cmd.Value.GetType());
             }
-            Logger.info("🎇✨🎉✨🛠💊 - Vitamin Start - 💊🛠✨🎉✨🎇");
+            Logger.Info("🎇✨🎉✨🛠💊 - Vitamin Start - 💊🛠✨🎉✨🎇");
         }
 
         /// <summary>
         /// 注入单例
         /// 仅供内部调用，如果你希望框架外的类有依赖注入，请使用createObject实例化该类
         /// </summary>
-        static private bool injectInstance(object target, Type type)
+        static private bool injectInstance(object target,Type type)
         {
             bool result = true;
             var instanceType = typeof(Instance);
@@ -123,19 +125,20 @@ namespace vitamin
         /// 创建实例
         /// 此方法适用于框架外的类有依赖注入的需求的情况，请使用该方法实例化该类
         /// </summary>
-        static public object createObject(Type type)
+        static public T createObject<T>()
         {
+            Type type=typeof(T);
             object obj = Activator.CreateInstance(type);
-            Vitamin.injectModel(obj, type);
-            Vitamin.injectInstance(obj, type);
-            return obj;
+            Vitamin.injectModel(obj,type);
+            Vitamin.injectInstance(obj,type);
+            return (T)obj;
         }
 
         /// <summary>
         /// 注入Model
         /// 通过框架接口获取的组件才会有相关的依赖注入
         /// </summary>
-        static private bool injectModel(object target, Type type)
+        static private bool injectModel(object target,Type type)
         {
             bool result = true;
             var modelType = typeof(Model);
@@ -158,8 +161,9 @@ namespace vitamin
         /// 获取组件
         /// 通过框架接口获取的组件才会有相关的依赖注入
         /// </summary>
-        static public ViewBase getView(Type viewType)
+        static public T getView<T>() where T : ViewBase
         {
+            Type viewType = typeof(T);
             if (Vitamin.__views.ContainsKey(viewType))
             {
                 if (Vitamin.__views.GetValueOrDefault(viewType) == null)
@@ -169,7 +173,7 @@ namespace vitamin
                     Vitamin.__views[viewType] = view;
                 }
             }
-            return Vitamin.__views[viewType];
+            return (T)Vitamin.__views[viewType];
         }
 
         /// <summary>
@@ -187,7 +191,7 @@ namespace vitamin
                 }
                 else
                 {
-                    Logger.error("无法执行命令:" + cmdRoute);
+                    Logger.Error("无法执行命令:" + cmdRoute);
                 }
             }
         }
@@ -197,7 +201,7 @@ namespace vitamin
         /// </summary>
         static public void reflex(object instance)
         {
-            Logger.log(instance.ToString());
+            Logger.Log(instance.ToString());
             Vitamin.logFileds(instance.GetType());
             Vitamin.logPropertys(instance.GetType());
             Vitamin.logMethods(instance.GetType());

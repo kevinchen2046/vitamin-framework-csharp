@@ -1,8 +1,42 @@
 ﻿using System;
 using System.Reflection;
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
 using vitamin;
+using vitamin.utils;
 namespace test
 {
+    class MyEvent : Event
+    {
+        public static string ENTER = "ENTER";
+        public string name = "myname is.xxx";
+        public MyEvent(string type, params object[] data) : base(type, data)
+        {
+            
+        }
+    }
+
+    class EventTest
+    {
+        public EventTest()
+        {
+            EventEmitter emitter = new EventEmitter();
+
+            emitter.on<Event>("ENTER", (Event e) =>
+            {
+                Logger.Log(e.ToString());
+            });
+            emitter.on<MyEvent>(MyEvent.ENTER, (MyEvent e) =>
+            {
+                Logger.Log(e.ToString());
+            });
+
+            emitter.emit<Event>("ENTER", "a", "bc", "hello!!");
+            emitter.emit<MyEvent>(MyEvent.ENTER, 1, 2, 3);
+        }
+    }
+
     class Program
     {
         static void Main(string[] args)
@@ -11,26 +45,33 @@ namespace test
             Vitamin.initialize();
             //Vitamin.reflex(typeof(ModelUser));
 
-            //从框架内获取一个视图组件
-            ViewMain view = (ViewMain)Vitamin.getView(typeof(ViewMain));
-
-            //测试事件机制
-            view.on("ENTER", Program.eventHandler);
+            // //从框架内获取一个视图组件
+            ViewMain view = Vitamin.getView<ViewMain>();
 
             //视图组件打开
             view.enter();
 
-            Vitamin.delay(2000, delegate (object sender, System.Timers.ElapsedEventArgs e)
-            {
-                //视图组件关闭
-                view.exit();
-            });
+            new EventTest();
+
+            Logger.Log(MathUtil.Random(),MathUtil.Random(),MathUtil.Random(),MathUtil.Random());
+
+            int[] list={1,2,3,4,5,6,7};
+            CollectionUtil.Shuffle(list);
+            Logger.List(list);
+            // Vitamin.delay(2000, (object sender, System.Timers.ElapsedEventArgs e)=>{
+            //     //视图组件关闭
+            //     view.exit();
+            // });
             Console.ReadKey();
         }
 
-        static private void eventHandler(params object[] args)
+        static private void eventHandler(vitamin.Event e)
         {
-            Logger.debug(args);
+            Logger.Debug(e.ToString());
+        }
+        static private void eventHandler1(MyEvent e)
+        {
+            Logger.Debug(e.ToString());
         }
     }
 
@@ -46,10 +87,10 @@ namespace test
         //Command被执行
         public override void exec(params object[] args)
         {
-            Logger.debug("CommandUser:" + this.user.name);
+            Logger.Debug("CommandUser:" + this.user.name);
             this.net.request(new TestMsg(), delegate (object data)
             {
-                Logger.debug(data.ToString());
+                Logger.Debug(data.ToString());
             });
         }
     }
@@ -73,8 +114,8 @@ namespace test
         //这里是Model的初始化方法，会在框架初始化之前被触发
         public override void initialize()
         {
-            Logger.debug("ModelBag:" + this.user.name);
-            Logger.debug("ModelBag:" + this.manager.name);
+            Logger.Debug("ModelBag:" + this.user.name);
+            Logger.Debug("ModelBag:" + this.manager.name);
         }
     }
 
@@ -99,10 +140,10 @@ namespace test
         //视图组件打开
         public override void enter()
         {
-            Logger.log("ViewMain:enter");
+            Logger.Log("ViewMain:enter");
             base.enter();
 
-            Logger.debug("ViewMain:" + this.user.name);
+            Logger.Debug("ViewMain:" + this.user.name);
             this.execCommand("user.send");
             this.emit("ENTER", "event", "emit!");
         }
@@ -110,7 +151,7 @@ namespace test
         //视图组件关闭
         public override void exit()
         {
-            Logger.log("ViewMain:exit");
+            Logger.Log("ViewMain:exit");
             base.exit();
         }
     }
@@ -125,6 +166,6 @@ namespace test
 
     class Manager
     {
-        public string name="Manager";
+        public string name = "Manager";
     }
 }
