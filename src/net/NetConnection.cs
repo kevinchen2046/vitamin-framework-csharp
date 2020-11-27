@@ -1,10 +1,10 @@
 namespace vitamin{
     
-    public delegate void ConnetedHandler(Connection net);
+    public delegate void ConnetedHandler(NetConnection net);
     public delegate void DataHandler(ByteArray bytes);
-    public delegate void ClosedHandler(Connection net);
+    public delegate void ClosedHandler(NetConnection net);
 
-    public class Connection
+    public class NetConnection
     {
         private ConnetedHandler connetedhandler;
         private DataHandler datahandler;

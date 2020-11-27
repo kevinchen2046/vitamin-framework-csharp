@@ -4,7 +4,7 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using vitamin;
-using vitamin.utils;
+
 namespace test
 {
     class MyEvent : Event
@@ -85,6 +85,7 @@ namespace test
             });
             
             ByteArray bytes=new ByteArray();
+            //bytes.Endian=ByteArrayEndian.BIG_ENDIAN;
             bytes.WriteByte(212);
             bytes.WriteDouble(5.34245121);
             bytes.WriteFloat(6.34245f);

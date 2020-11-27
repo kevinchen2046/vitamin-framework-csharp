@@ -1,5 +1,5 @@
 using System.Collections;
-namespace vitamin.utils
+namespace vitamin
 {
     public class UnitUtil
     {
@@ -42,21 +42,21 @@ namespace vitamin.utils
 		 * @return 
 		 * 
 		 */
-        public static string currencyFormat2(float value,string splitchar=",")
+        public static string currencyFormat2(float value, string splitchar = ",")
         {
             string valueString = value.ToString();
             int index = valueString.Length;
             ArrayList result = new ArrayList();
             while (index >= 3)
             {
-                result.Insert(0,valueString.Substring(index - 3, 3));
+                result.Insert(0, valueString.Substring(index - 3, 3));
                 index = index - 3;
             };
             if (index > 0)
             {
-                result.Insert(0,valueString.Substring(0, index));
+                result.Insert(0, valueString.Substring(0, index));
             };
-            return CollectionUtil.Join(result,splitchar);
+            return CollectionUtil.Join(result, splitchar);
         }
     }
 }

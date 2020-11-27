@@ -9,19 +9,19 @@ namespace vitamin
         }
         static public void List(object[] args)
         {
-            Logger.to("[LIST]", ConsoleColor.White, vitamin.utils.CollectionUtil.Join(args, ","));
+            Logger.to("[LIST]", ConsoleColor.White, CollectionUtil.Join(args, ","));
         }
         static public void List(int[] args)
         {
-            Logger.to("[LIST]", ConsoleColor.White, vitamin.utils.CollectionUtil.Join(args, ","));
+            Logger.to("[LIST]", ConsoleColor.White, CollectionUtil.Join(args, ","));
         }
         static public void List(string[] args)
         {
-            Logger.to("[LIST]", ConsoleColor.White, vitamin.utils.CollectionUtil.Join(args, ","));
+            Logger.to("[LIST]", ConsoleColor.White, CollectionUtil.Join(args, ","));
         }
         static public void List(float[] args)
         {
-            Logger.to("[LIST]", ConsoleColor.White, vitamin.utils.CollectionUtil.Join(args, ","));
+            Logger.to("[LIST]", ConsoleColor.White, CollectionUtil.Join(args, ","));
         }
         static public void Info(params object[] args)
         {

@@ -1,7 +1,7 @@
 
 using System;
 using System.Collections;
-namespace vitamin.utils
+namespace vitamin
 {
 
     public class ShuffleComparer : IComparer

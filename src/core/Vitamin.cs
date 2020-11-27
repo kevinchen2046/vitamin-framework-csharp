@@ -91,7 +91,7 @@ namespace vitamin
         /// 注入单例
         /// 仅供内部调用，如果你希望框架外的类有依赖注入，请使用createObject实例化该类
         /// </summary>
-        static private bool injectInstance(object target,Type type)
+        static private bool injectInstance(object target, Type type)
         {
             bool result = true;
             var instanceType = typeof(Instance);
@@ -127,10 +127,10 @@ namespace vitamin
         /// </summary>
         static public T createObject<T>()
         {
-            Type type=typeof(T);
+            Type type = typeof(T);
             object obj = Activator.CreateInstance(type);
-            Vitamin.injectModel(obj,type);
-            Vitamin.injectInstance(obj,type);
+            Vitamin.injectModel(obj, type);
+            Vitamin.injectInstance(obj, type);
             return (T)obj;
         }
 
@@ -138,7 +138,7 @@ namespace vitamin
         /// 注入Model
         /// 通过框架接口获取的组件才会有相关的依赖注入
         /// </summary>
-        static private bool injectModel(object target,Type type)
+        static private bool injectModel(object target, Type type)
         {
             bool result = true;
             var modelType = typeof(Model);
