@@ -95,6 +95,15 @@ namespace vitamin.utils
             }
             return result;
         }
+        public static string Join(byte[] list, string joinchar)
+        {
+            var result = "";
+            for (var i = 0; i < list.Length; i++)
+            {
+                result += (i < list.Length - 1) ? (list[i].ToString() + joinchar) : (list[i].ToString());
+            }
+            return result;
+        }
         /**
 		 * 释放集合 
 		 * @param source

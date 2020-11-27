@@ -24,3 +24,16 @@ F:\projects\cshape\vitamin-framework-c-\obj\Debug\netcoreapp3.1\test.csproj.Core
 F:\projects\cshape\vitamin-framework-c-\obj\Debug\netcoreapp3.1\test.dll
 F:\projects\cshape\vitamin-framework-c-\obj\Debug\netcoreapp3.1\test.pdb
 F:\projects\cshape\vitamin-framework-c-\obj\Debug\netcoreapp3.1\test.genruntimeconfig.cache
+G:\workspace\git-repository\vitamin-framework-csharp\obj\Debug\netcoreapp3.1\test.csprojAssemblyReference.cache
+G:\workspace\git-repository\vitamin-framework-csharp\obj\Debug\netcoreapp3.1\test.AssemblyInfoInputs.cache
+G:\workspace\git-repository\vitamin-framework-csharp\obj\Debug\netcoreapp3.1\test.AssemblyInfo.cs
+G:\workspace\git-repository\vitamin-framework-csharp\obj\Debug\netcoreapp3.1\test.csproj.CoreCompileInputs.cache
+G:\workspace\git-repository\vitamin-framework-csharp\obj\Debug\netcoreapp3.1\test.dll
+G:\workspace\git-repository\vitamin-framework-csharp\obj\Debug\netcoreapp3.1\test.pdb
+G:\workspace\git-repository\vitamin-framework-csharp\bin\Debug\netcoreapp3.1\test.exe
+G:\workspace\git-repository\vitamin-framework-csharp\bin\Debug\netcoreapp3.1\test.deps.json
+G:\workspace\git-repository\vitamin-framework-csharp\bin\Debug\netcoreapp3.1\test.runtimeconfig.json
+G:\workspace\git-repository\vitamin-framework-csharp\bin\Debug\netcoreapp3.1\test.runtimeconfig.dev.json
+G:\workspace\git-repository\vitamin-framework-csharp\bin\Debug\netcoreapp3.1\test.dll
+G:\workspace\git-repository\vitamin-framework-csharp\bin\Debug\netcoreapp3.1\test.pdb
+G:\workspace\git-repository\vitamin-framework-csharp\obj\Debug\netcoreapp3.1\test.genruntimeconfig.cache

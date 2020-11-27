@@ -13,7 +13,7 @@ namespace test
         public string name = "myname is.xxx";
         public MyEvent(string type, params object[] data) : base(type, data)
         {
-            
+
         }
     }
 
@@ -36,7 +36,27 @@ namespace test
             emitter.emit<MyEvent>(MyEvent.ENTER, 1, 2, 3);
         }
     }
+    enum ByteArraySize
+    {
 
+        SIZE_OF_BOOLEAN = 1,
+
+        SIZE_OF_INT8 = 1,
+
+        SIZE_OF_INT16 = 2,
+
+        SIZE_OF_INT32 = 4,
+
+        SIZE_OF_UINT8 = 1,
+
+        SIZE_OF_UINT16 = 2,
+
+        SIZE_OF_UINT32 = 4,
+
+        SIZE_OF_FLOAT32 = 4,
+
+        SIZE_OF_FLOAT64 = 8
+    }
     class Program
     {
         static void Main(string[] args)
@@ -53,16 +73,50 @@ namespace test
 
             new EventTest();
 
-            Logger.Log(MathUtil.Random(),MathUtil.Random(),MathUtil.Random(),MathUtil.Random());
+            Logger.Log(MathUtil.Random(), MathUtil.Random(), MathUtil.Random(), MathUtil.Random());
 
-            int[] list={1,2,3,4,5,6,7};
+            int[] list = { 1, 2, 3, 4, 5, 6, 7 };
             CollectionUtil.Shuffle(list);
             Logger.List(list);
-            // Vitamin.delay(2000, (object sender, System.Timers.ElapsedEventArgs e)=>{
-            //     //视图组件关闭
-            //     view.exit();
-            // });
+            Vitamin.delay(2000, (object sender, System.Timers.ElapsedEventArgs e) =>
+            {
+                //视图组件关闭
+                view.exit();
+            });
+            
+            ByteArray bytes=new ByteArray();
+            bytes.WriteByte(212);
+            bytes.WriteDouble(5.34245121);
+            bytes.WriteFloat(6.34245f);
+            bytes.WriteInt(563214);
+            bytes.WriteUTF("hellp!!!!");
+            bytes.WriteBoolean(false);
+
+            int len=bytes.WriteUTFBytes("some gays!!");
+            bytes.Position=0;
+            Logger.Log(bytes.ReadByte(),bytes.ReadDouble(),bytes.ReadFloat(),bytes.ReadInt(),bytes.ReadUTF(),bytes.ReadBoolean(),bytes.ReadUTFBytes(len));
             Console.ReadKey();
+        }
+        private static byte[] Sub(byte[] bytes,int position,int length)
+        {
+            return bytes.Skip(position).Take(length).ToArray();
+        }
+
+        private static byte[] MeagByte(params byte[][] list)
+        {
+            int len = 0;
+            foreach (byte[] bytes in list)
+            {
+                len += bytes.Length;
+            }
+            byte[] data = new byte[len];
+            int index = 0;
+            foreach (byte[] bytes in list)
+            {
+                bytes.CopyTo(data, index);
+                index += bytes.Length;
+            }
+            return data;
         }
 
         static private void eventHandler(vitamin.Event e)
@@ -88,7 +142,7 @@ namespace test
         public override void exec(params object[] args)
         {
             Logger.Debug("CommandUser:" + this.user.name);
-            this.net.request(new TestMsg(), delegate (object data)
+            this.net.Request(new TestMsg(), delegate (object data)
             {
                 Logger.Debug(data.ToString());
             });
@@ -156,7 +210,7 @@ namespace test
         }
     }
 
-    class TestMsg : IMsg
+    class TestMsg : IUpMsg
     {
         object __data;
         public int routId { get { return 1001; } }

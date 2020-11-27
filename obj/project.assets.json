@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\projects\\cshape\\vitamin-framework-c-\\test.csproj",
-      "projectName": "test",
-      "projectPath": "F:\\projects\\cshape\\vitamin-framework-c-\\test.csproj",
+      "projectUniqueName": "G:\\workspace\\git-repository\\vitamin-framework-csharp\\vitamin.csproj",
+      "projectName": "vitamin",
+      "projectPath": "G:\\workspace\\git-repository\\vitamin-framework-csharp\\vitamin.csproj",
       "packagesPath": "C:\\Users\\kevin\\.nuget\\packages\\",
-      "outputPath": "F:\\projects\\cshape\\vitamin-framework-c-\\obj\\",
+      "outputPath": "G:\\workspace\\git-repository\\vitamin-framework-csharp\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\kevin\\AppData\\Roaming\\NuGet\\NuGet.Config"
