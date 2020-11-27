@@ -36,27 +36,6 @@ namespace test
             emitter.emit<MyEvent>(MyEvent.ENTER, 1, 2, 3);
         }
     }
-    enum ByteArraySize
-    {
-
-        SIZE_OF_BOOLEAN = 1,
-
-        SIZE_OF_INT8 = 1,
-
-        SIZE_OF_INT16 = 2,
-
-        SIZE_OF_INT32 = 4,
-
-        SIZE_OF_UINT8 = 1,
-
-        SIZE_OF_UINT16 = 2,
-
-        SIZE_OF_UINT32 = 4,
-
-        SIZE_OF_FLOAT32 = 4,
-
-        SIZE_OF_FLOAT64 = 8
-    }
     class Program
     {
         static void Main(string[] args)
